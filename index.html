@@ -54,18 +54,20 @@
             responseBox.innerHTML = 'Loading...';
 
             try {
-                const response = await axios.post('https://api.groq.com/openai/v1/completions', {
-                    model: 'text-davinci-003',
-                    prompt: userMessage,
-                    max_tokens: 100
+                const response = await axios.post('https://api.groq.com/v1/chat/completions', {
+                    model: 'gpt-3.5-turbo',  // ניתן לשנות למודל אחר של OpenAI
+                    messages: [
+                        { role: 'user', content: userMessage }
+                    ],
+                    max_tokens: 150
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer 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' // Replace with your Groq API key
+                        'Authorization': `Bearer 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` // החלף במפתח ה-API שלך
                     }
                 });
 
-                responseBox.innerHTML = response.data.choices[0].text;
+                responseBox.innerHTML = response.data.choices[0].message.content;
             } catch (error) {
                 console.error('Error:', error);
                 responseBox.innerHTML = 'An error occurred. Please try again later.';
