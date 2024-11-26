@@ -54,7 +54,7 @@
             responseBox.innerHTML = 'Loading...';
 
             try {
-                const response = await axios.post('https://api.groq.com/openai/v1/completions', {
+                const response = await axios.post('https://api.groq.com/v1/chat/completions', {
                     prompt: userMessage,
                     max_tokens: 100,
                     model: 'text-davinci-003'
