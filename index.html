@@ -54,14 +54,14 @@
             responseBox.innerHTML = 'Loading...';
 
             try {
-                const response = await axios.post('https://api.groq.com/v1/chat/completions', {
+                const response = await axios.post('https://api.groq.com/openai/v1/completions', {
+                    model: 'text-davinci-003',
                     prompt: userMessage,
-                    max_tokens: 100,
-                    model: 'text-davinci-003'
+                    max_tokens: 100
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer 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` // Replace with your Groq API key
+                        'Authorization': 'Bearer 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' // Replace with your Groq API key
                     }
                 });
 
