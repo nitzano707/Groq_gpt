@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Groq API</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #chatBox {
+            width: 400px;
+            max-width: 90%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8e8e8;
+            border-radius: 5px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatBox">
+        <h3>Chat with Groq API</h3>
+        <textarea id="userMessage" rows="4" style="width: 100%;" placeholder="Type your message here..."></textarea>
+        <button onclick="sendMessage()" style="margin-top: 10px;">Send</button>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userMessage = document.getElementById('userMessage').value;
+            const responseBox = document.getElementById('response');
+
+            if (!userMessage) {
+                alert('Please enter a message.');
+                return;
+            }
+
+            responseBox.innerHTML = 'Loading...';
+
+            try {
+                const response = await axios.post('https://api.groq.com/openai/v1/completions', {
+                    prompt: userMessage,
+                    max_tokens: 100,
+                    model: 'text-davinci-003'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer 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` // Replace with your Groq API key
+                    }
+                });
+
+                responseBox.innerHTML = response.data.choices[0].text;
+            } catch (error) {
+                console.error('Error:', error);
+                responseBox.innerHTML = 'An error occurred. Please try again later.';
+            }
+        }
+    </script>
+</body>
+</html>
